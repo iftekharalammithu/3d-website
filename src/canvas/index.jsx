@@ -6,7 +6,18 @@ import Camerarig from "./Camerarig";
 import Shirt from "./Shirt";
 
 const Canvasmodel = () => {
-  return <div>Canvasmodel</div>;
+  return (
+    <Canvas>
+      <ambientLight intensity={0.5}></ambientLight>
+      <Environment preset="city"></Environment>
+      <Camerarig>
+        {/* <Backdrop></Backdrop> */}
+        <Center>
+          <Shirt></Shirt>
+        </Center>
+      </Camerarig>
+    </Canvas>
+  );
 };
 
 export default Canvasmodel;
