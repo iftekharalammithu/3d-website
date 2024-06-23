@@ -44,7 +44,22 @@ const Customizer = () => {
               handelClick={() => {
                 state.intro = true;
               }}
+              custonStyles="w-fit px-4 py-2.5 font-bold text-sm "
             ></Custombutton>
+          </motion.div>
+          <motion.div
+            className="filtertabs-container "
+            {...slideAnimation("up")}
+          >
+            {FilterTabs.map((tab) => (
+              <Tab
+                key={tab.name}
+                isFilterTab
+                isActivTab=""
+                tab={tab}
+                handleclick={() => {}}
+              ></Tab>
+            ))}
           </motion.div>
         </>
       )}
