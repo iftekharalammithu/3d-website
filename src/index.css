@@ -14,7 +14,9 @@ html {
     font-family: "Inter var", sans-serif;
   }
 }
-
+.border-map {
+  @apply border-red-300 border border-solid;
+}
 .app {
   @apply relative w-full h-screen overflow-hidden;
 }

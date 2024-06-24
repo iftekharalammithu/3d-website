@@ -8,7 +8,13 @@ const Custombutton = ({ title, handelClick, custonStyles, type }) => {
     if (type === "filled") {
       return {
         backgroundColor: snap.color,
-        color: "white",
+        color: "#fff",
+      };
+    } else if (type === "outline") {
+      return {
+        borderwidth: "1px ",
+        borderColor: snap.color,
+        color: snap.color,
       };
     }
   };

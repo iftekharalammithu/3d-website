@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { act, useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
 import config from "../config/config";
 import state from "../store";
@@ -17,6 +17,61 @@ import {
 
 const Customizer = () => {
   const snap = useSnapshot(state);
+  const [file, setfile] = useState("");
+  const [promt, setpromt] = useState("");
+  const [generateimg, setgenerateimg] = useState(false);
+  const [activetab, setactivetab] = useState("");
+  const [filtertab, setfiltertab] = useState({
+    logoshirt: true,
+    stylishshirt: false,
+  });
+
+  const generatetabcontent = () => {
+    switch (activetab) {
+      case "colorpicker":
+        return <Colorpicker></Colorpicker>;
+      case "aipicker":
+        return <Aipicker></Aipicker>;
+      case "filepicker":
+        return (
+          <Filepicker
+            file={file}
+            setfile={setfile}
+            readfile={readfile}
+          ></Filepicker>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  const handdecals = (result, type) => {
+    const decaltype = decaltype[type];
+    state[decaltype.stateProperty] = result;
+    if (!activetab[decaltype.filtertab]) {
+      handleactivetab(decaltype.filtertab);
+    }
+  };
+  const handleactivetab = (tabname) => {
+    switch (tabname) {
+      case "logoshirt":
+        state.isLogoTexture = !activetab[tabname];
+      case "stylishshirt":
+        state.isFullTexture = !activetab[tabname];
+
+      default:
+        state.isFullTexture = false;
+        state.isLogoTexture = true;
+    }
+  };
+  const readfile = (type) => {
+    reader(file).then((result) => {
+      handdecals(result, type);
+      setactivetab("");
+    });
+  };
+
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -29,8 +84,15 @@ const Customizer = () => {
             <div className="flex items-center min-h-screen">
               <div className="editortabs-container tabs">
                 {EditorTabs.map((tab) => (
-                  <Tab key={tab.name} tab={tab} handleclick={() => {}}></Tab>
+                  <Tab
+                    key={tab.name}
+                    tab={tab}
+                    handleclick={() => {
+                      setactivetab(tab.name);
+                    }}
+                  ></Tab>
                 ))}
+                {generatetabcontent()}
               </div>
             </div>
           </motion.div>
