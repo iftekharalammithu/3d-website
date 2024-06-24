@@ -64,6 +64,7 @@ const Customizer = () => {
         state.isFullTexture = false;
         state.isLogoTexture = true;
     }
+    setfiltertab((prev) => ({ ...prev, [tabname]: !prev[tabname] }));
   };
   const readfile = (type) => {
     reader(file).then((result) => {
