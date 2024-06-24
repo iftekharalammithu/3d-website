@@ -47,18 +47,18 @@ const Customizer = () => {
   };
 
   const handdecals = (result, type) => {
-    const decaltype = decaltype[type];
+    const decaltype = DecalTypes[type];
     state[decaltype.stateProperty] = result;
-    if (!activetab[decaltype.filtertab]) {
+    if (!filtertab[decaltype.filtertab]) {
       handleactivetab(decaltype.filtertab);
     }
   };
   const handleactivetab = (tabname) => {
     switch (tabname) {
       case "logoshirt":
-        state.isLogoTexture = !activetab[tabname];
+        state.isLogoTexture = !filtertab[tabname];
       case "stylishshirt":
-        state.isFullTexture = !activetab[tabname];
+        state.isFullTexture = !filtertab[tabname];
 
       default:
         state.isFullTexture = false;
@@ -117,9 +117,11 @@ const Customizer = () => {
               <Tab
                 key={tab.name}
                 isFilterTab
-                isActivTab=""
+                isActivTab={filtertab[tab.name]}
                 tab={tab}
-                handleclick={() => {}}
+                handleclick={() => {
+                  handleactivetab(tab.name);
+                }}
               ></Tab>
             ))}
           </motion.div>
